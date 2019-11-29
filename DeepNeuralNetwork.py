@@ -79,3 +79,9 @@ for i in range(100000):
     ploss=closs
 if(flag==0):
     print("training not completed run few more iterations")
+def predict(x,w):
+    r=x
+    for i in w:
+        r=sigmoid(r.dot(i))
+    return r
+ycap=predict(x,[w1,w2,w3,w4])
