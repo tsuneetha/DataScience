@@ -53,4 +53,29 @@ ploss=0
 flag=0
 conv=1e-8
 for i in range(100000):
-    
+    l1=sigmoid(x.dot(w1))
+    l2=sigmoid(l1.dot(w2))
+    l3=sigmoid(l2.dot(w3))
+    l4=sigmoid(l3.dot(w4))
+    e4=y-l4
+    closs=mse(y,l4)
+    if abs(ploss-closs)<=1e-8:
+        print("Training completed after",i+1,"iterations")
+        flag=1
+        break
+    if i%1000==0:
+        print("loss at iteration",i+1,"is ",closs)
+    d4=e4*derivative(l4)
+    e3=d4.dot(w4.T)
+    d3=e3*derivative(l3)
+    e2=d3.dot(w3.T)
+    d2=e2*derivative(l2)
+    e1=d2.dot(w2.T)
+    d1=e1*derivative(l1)
+    w1+=x.T.dot(d1)
+    w2+=l1.T.dot(d2)
+    w3+=l2.T.dot(d3)
+    w4+=l3.T.dot(d4)
+    ploss=closs
+if(flag==0):
+    print("training not completed run few more iterations")
